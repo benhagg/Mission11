@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+// import components
+import Book from "./Book.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [books, setBooks] = useState([]);
+  const [displayNum, setDisplayNum] = useState(5);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:5000/Bookstore/books?page=${page}&displayNum=${displayNum}&sort=${sort}`
+    )
+      .then((res) => res.json())
+      .then((data) => setBooks(data));
+  }, [page, displayNum, sort]);
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <label htmlFor="display-num">Display Number</label>
+        <input
+          id="display-num"
+          type="number"
+          value={displayNum}
+          onChange={(e) => setDisplayNum(Number(e.target.value))}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div>
+        <button
+          id="sort-btn"
+          onClick={() => {
+            setSort(!sort);
+          }}
+        >
+          Sort
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>
+        {books.map((book: Book) => (
+          <Book book={book} />
+        ))}
+      </div>
+      <div id="pagination">
+        <button
+          onClick={() => {
+            if (page > 1) {
+              setPage(page - 1);
+            }
+          }}
+        >
+          Previous
+        </button>
+        <button onClick={() => setPage(page + 1)}>Next</button>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
