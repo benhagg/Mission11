@@ -1,3 +1,6 @@
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 interface Book {
   bookId: number;
   title: string;
@@ -16,30 +19,33 @@ interface BookProps {
 
 const Book: React.FC<BookProps> = ({ book }) => {
   return (
-    <div className="book" id={book.bookId.toString()}>
-      <h2>{book.title}</h2>
-      <p>
-        <strong>Author:</strong> {book.author}
-      </p>
-      <p>
-        <strong>Publisher:</strong> {book.publisher}
-      </p>
-      <p>
-        <strong>ISBN:</strong> {book.isbn}
-      </p>
-      <p>
-        <strong>Classification:</strong> {book.classification}
-      </p>
-      <p>
-        <strong>Category:</strong> {book.category}
-      </p>
-      <p>
-        <strong>Page Count:</strong> {book.pageCount}
-      </p>
-      <p>
-        <strong>Price:</strong> {book.price}
-      </p>
+    <div className="card mb-3" id={book.bookId.toString()}>
+      <div className="card-body">
+        <h2 className="card-title">{book.title}</h2>
+        <p className="card-text">
+          <strong>Author:</strong> {book.author}
+        </p>
+        <p className="card-text">
+          <strong>Publisher:</strong> {book.publisher}
+        </p>
+        <p className="card-text">
+          <strong>ISBN:</strong> {book.isbn}
+        </p>
+        <p className="card-text">
+          <strong>Classification:</strong> {book.classification}
+        </p>
+        <p className="card-text">
+          <strong>Category:</strong> {book.category}
+        </p>
+        <p className="card-text">
+          <strong>Page Count:</strong> {book.pageCount}
+        </p>
+        <p className="card-text">
+          <strong>Price:</strong> {book.price}
+        </p>
+      </div>
     </div>
   );
 };
+
 export default Book;
