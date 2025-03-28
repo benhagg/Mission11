@@ -16,13 +16,18 @@ public class BookstoreController : ControllerBase
     }
 
     [HttpGet("books")]
-    public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] int page = 1, [FromQuery] int displayNum = 5, [FromQuery] bool sort = true)
+    public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] string? category, [FromQuery] int page = 1,
+    [FromQuery] int displayNum = 5, [FromQuery] bool sort = true)
     {
         IQueryable<Book> query = _context.Books;
 
         if (sort)
         {
             query = query.OrderBy(b => b.Title);
+            if(category != null)
+            {
+                query = query.Where(b => b.Category == category);
+            }
         }
 
         List<Book> books = await query
