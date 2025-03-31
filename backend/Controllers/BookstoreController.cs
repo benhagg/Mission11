@@ -37,4 +37,47 @@ public class BookstoreController : ControllerBase
 
         return Ok(books);
     }
+    [HttpPut("books/{id}")]
+    public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
+    {
+        if (id != book.BookId)
+        {
+            return BadRequest("Book ID mismatch");
+        }
+
+        var existingBook = await _context.Books.FindAsync(id);
+        if (existingBook == null)
+        {
+            return NotFound();
+        }
+
+        _context.Entry(existingBook).CurrentValues.SetValues(book);
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return StatusCode(500, "An error occurred while updating the book.");
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("books/{id}")]
+    public async Task<IActionResult> DeleteBook(int id)
+    {
+        var book = await _context.Books.FindAsync(id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
 }
