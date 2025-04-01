@@ -13,8 +13,6 @@ interface BookProps {
 
 const Book: React.FC<BookProps> = ({ book, cart, setCart }) => {
   const navigate = useNavigate();
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editedBook, setEditedBook] = useState<BookType>(book);
 
   useEffect(() => {
@@ -99,86 +97,8 @@ const Book: React.FC<BookProps> = ({ book, cart, setCart }) => {
         </p>
         <div style={{ display: "flex", gap: "10px" }}>
           <button onClick={() => addToCart(book)}>Add To Cart</button>
-          <button onClick={() => setShowEditModal(true)}>Edit</button>
-          <button onClick={() => setShowDeleteModal(true)}>Delete</button>
         </div>
       </div>
-
-      {showEditModal && (
-        <div
-          className="modal"
-          style={{
-            display: "block",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            className="modal-content"
-            style={{
-              backgroundColor: "white",
-              margin: "10% auto",
-              padding: "20px",
-              border: "1px solid #888",
-              width: "50%",
-            }}
-          >
-            <h3>Edit Book</h3>
-            {Object.keys(book).map(
-              (key) =>
-                key !== "bookId" && (
-                  <div key={key}>
-                    <label>{key}:</label>
-                    <input
-                      type="text"
-                      value={(editedBook as any)[key]}
-                      onChange={(e) =>
-                        setEditedBook({ ...editedBook, [key]: e.target.value })
-                      }
-                    />
-                  </div>
-                )
-            )}
-            <button onClick={handleEdit}>Save</button>
-            <button onClick={() => setShowEditModal(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
-
-      {showDeleteModal && (
-        <div
-          className="modal"
-          style={{
-            display: "block",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            className="modal-content"
-            style={{
-              backgroundColor: "white",
-              margin: "10% auto",
-              padding: "20px",
-              border: "1px solid #888",
-              width: "50%",
-            }}
-          >
-            <h3>Are you sure you want to delete this book?</h3>
-            <button onClick={handleDelete}>Yes</button>
-            <button onClick={() => setShowDeleteModal(false)}>No</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

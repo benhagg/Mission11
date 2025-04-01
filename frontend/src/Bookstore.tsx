@@ -16,8 +16,21 @@ const Bookstore: React.FC<BookstoreProps> = ({ cart, setCart }) => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
   const [category, setCategory] = useState("");
+  const [newBook, setNewBook] = useState<BookType>({
+    bookId: 0,
+    title: "",
+    author: "",
+    publisher: "",
+    isbn: "",
+    classification: "",
+    category: "",
+    pageCount: 0,
+    price: 0,
+  });
+
   const navigate = useNavigate();
 
+  // LOAD ALL BOOKS ON PAGE LOAD (and other dependencies)
   useEffect(() => {
     fetch(
       `http://localhost:5000/Bookstore/books?page=${page}&displayNum=${displayNum}&sort=${sort}&category=${category}`
@@ -25,6 +38,27 @@ const Bookstore: React.FC<BookstoreProps> = ({ cart, setCart }) => {
       .then((res) => res.json())
       .then((data) => setBooks(data));
   }, [page, displayNum, sort, category]);
+
+  // ADD A NEW BOOK
+  const handleAddBook = (editedBook: BookType) => {
+    fetch("http://localhost:5000/Bookstore/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedBook),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Book added successfully");
+        } else {
+          console.error("Error adding book");
+        }
+      })
+      .catch((error) => console.error("Error adding book:", error));
+    // reload the page to reset modal state and show updated changes
+    window.location.reload();
+  };
 
   return (
     <div className="container">

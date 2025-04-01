@@ -15,6 +15,7 @@ public class BookstoreController : ControllerBase
         _context = context;
     }
 
+// GET ALL BOOKS
     [HttpGet("books")]
     public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] string? category, [FromQuery] int page = 1,
     [FromQuery] int displayNum = 5, [FromQuery] bool sort = true)
@@ -37,6 +38,8 @@ public class BookstoreController : ControllerBase
 
         return Ok(books);
     }
+
+// UPDATE
     [HttpPut("books/{id}")]
     public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
     {
@@ -65,6 +68,7 @@ public class BookstoreController : ControllerBase
         return NoContent();
     }
 
+// DELETE
     [HttpDelete("books/{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
@@ -78,6 +82,16 @@ public class BookstoreController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
+    }
+
+// ADD BOOK
+    [HttpPost("books")]
+    public async Task<ActionResult<Book>> AddBook([FromBody] Book book)
+    {
+        _context.Books.Add(book);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetAllBooks), new { id = book.BookId }, book);
     }
 
 }
