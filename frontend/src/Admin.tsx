@@ -73,7 +73,7 @@ const Admin: React.FC = () => {
         }
       })
       .catch((error) => console.error("Error updating book:", error));
-    navigate("/admin");
+    navigate("/");
   };
 
   const handleDelete = () => {
