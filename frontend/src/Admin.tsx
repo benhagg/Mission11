@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BookType from "./types/Book";
 
 const Admin: React.FC = () => {
@@ -17,6 +18,8 @@ const Admin: React.FC = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState<number | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -70,6 +73,7 @@ const Admin: React.FC = () => {
         }
       })
       .catch((error) => console.error("Error updating book:", error));
+    navigate("/admin");
   };
 
   const handleDelete = () => {
