@@ -138,6 +138,12 @@ const Bookstore: React.FC<BookstoreProps> = ({ cart, setCart }) => {
         >
           View Cart ({cart.length} items)
         </button>
+        <button
+          className="btn btn-warning ms-3"
+          onClick={() => navigate("/admin")}
+        >
+          Admin Panel
+        </button>
       </div>
       <div className="row">
         {books.map((book: BookType) => (
