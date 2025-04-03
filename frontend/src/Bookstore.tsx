@@ -33,7 +33,7 @@ const Bookstore: React.FC<BookstoreProps> = ({ cart, setCart }) => {
   // LOAD ALL BOOKS ON PAGE LOAD (and other dependencies)
   useEffect(() => {
     fetch(
-      `http://localhost:5000/Bookstore/books?page=${page}&displayNum=${displayNum}&sort=${sort}&category=${category}`
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books?page=${page}&displayNum=${displayNum}&sort=${sort}&category=${category}`
     )
       .then((res) => res.json())
       .then((data) => setBooks(data));
@@ -41,13 +41,16 @@ const Bookstore: React.FC<BookstoreProps> = ({ cart, setCart }) => {
 
   // ADD A NEW BOOK
   const handleAddBook = (editedBook: BookType) => {
-    fetch("http://localhost:5000/Bookstore/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedBook),
-    })
+    fetch(
+      "https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedBook),
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book added successfully");

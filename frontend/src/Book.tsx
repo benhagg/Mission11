@@ -44,13 +44,16 @@ const Book: React.FC<BookProps> = ({ book, cart, setCart }) => {
   };
 
   const handleEdit = () => {
-    fetch(`http://localhost:5000/Bookstore/books/${editedBook.bookId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedBook),
-    })
+    fetch(
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books/${editedBook.bookId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedBook),
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book updated successfully");
@@ -64,9 +67,12 @@ const Book: React.FC<BookProps> = ({ book, cart, setCart }) => {
   };
 
   const handleDelete = () => {
-    fetch(`http://localhost:5000/Bookstore/books/${book.bookId}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books/${book.bookId}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book deleted successfully");

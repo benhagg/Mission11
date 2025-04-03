@@ -19,19 +19,24 @@ const Admin: React.FC = () => {
   const [bookToDelete, setBookToDelete] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/Bookstore/books?displayNum=100000`)
+    fetch(
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books?displayNum=100000`
+    )
       .then((res) => res.json())
       .then((data) => setBooks(data));
   }, []);
 
   const handleAdd = (newBook: BookType) => {
-    fetch("http://localhost:5000/Bookstore/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newBook),
-    })
+    fetch(
+      "https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBook),
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book added successfully");
@@ -46,13 +51,16 @@ const Admin: React.FC = () => {
   const handleEdit = () => {
     if (!editedBook) return;
 
-    fetch(`http://localhost:5000/Bookstore/books/${editedBook.bookId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedBook),
-    })
+    fetch(
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books/${editedBook.bookId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedBook),
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book updated successfully");
@@ -67,9 +75,12 @@ const Admin: React.FC = () => {
   const handleDelete = () => {
     if (bookToDelete === null) return;
 
-    fetch(`http://localhost:5000/Bookstore/books/${bookToDelete}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://mission13-h5dcdpe0b6abb0ab.eastus-01.azurewebsites.net/Bookstore/books/${bookToDelete}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           console.log("Book deleted successfully");
