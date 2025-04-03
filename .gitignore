@@ -52,3 +52,4 @@ logs/
 *.diff
 *.sublime-*
 *.code-workspace
+publish/

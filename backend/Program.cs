@@ -27,7 +27,8 @@ builder.Services.AddDbContext<BookstoreContext>(options =>
 
 
 var app = builder.Build();
-
+// redirect to https
+app.UseHttpsRedirection();
 // Enable CORS Middleware
 app.UseCors(MyAllowSpecificOrigins);
 
@@ -38,7 +39,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
