@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // Allow React frontend
+            policy.WithOrigins("https://victorious-grass-059acb81e.6.azurestaticapps.net/") // Allow React frontend
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
