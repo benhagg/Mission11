@@ -49,6 +49,7 @@ const Admin: React.FC = () => {
         }
       })
       .catch((error) => console.error("Error adding book:", error));
+    navigate("/");
   };
 
   const handleEdit = () => {
@@ -94,6 +95,7 @@ const Admin: React.FC = () => {
         }
       })
       .catch((error) => console.error("Error deleting book:", error));
+    navigate("/");
   };
 
   return (
